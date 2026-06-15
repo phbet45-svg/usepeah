@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans: "Montserrat", "Inter", sans-serif;
+  
+  --color-luxury: #C9A076;
+  --color-prestige-bg: #FDFBF7;
+  --color-cream-soft: #FCFAF6;
+  --color-atelier-line: #EFE6DC;
+  --color-luxe-dark: #120F0D;
+  --color-luxe-accent: #E5C3AB;
+}
+
+@layer utilities {
+  .tracking-luxury {
+    letter-spacing: 0.25em;
+  }
+  .tracking-supreme {
+    letter-spacing: 0.45em;
+  }
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #120F0D 30%, #C9A076 70%, #120F0D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .gold-gradient-text-light {
+    background: linear-gradient(135deg, #FFFDF9 20%, #E7C1A2 50%, #FFFDF9 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .gold-luxe-border {
+    border: 1px solid rgba(201, 160, 118, 0.25);
+  }
+  .gold-luxe-border-hover:hover {
+    border-color: rgba(201, 160, 118, 0.6);
+  }
+}

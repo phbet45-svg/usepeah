@@ -1,0 +1,167 @@
+{
+  "entities": {
+    "Category": {
+      "title": "Category",
+      "description": "Category and subcategory definitions for products",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique category identifier" },
+        "name": { "type": "string", "description": "Category name" },
+        "subcategories": { "type": "array", "description": "List of subcategories associated with this category" }
+      },
+      "required": ["id", "name"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Product in the catalog",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "name": { "type": "string", "description": "Product description" },
+        "categoryId": { "type": "string", "description": "Parent category ID" },
+        "subcategory": { "type": "string", "description": "Subcategory name" },
+        "brand": { "type": "string", "description": "Brand name, defaults to Usepeah" },
+        "sku": { "type": "string", "description": "Stock Keeping Unit code" },
+        "barcode": { "type": "string", "description": "EAN or scan barcode" },
+        "description": { "type": "string", "description": "Full product description details" },
+        "sizes": { "type": "array", "description": "Enabled sizes (P, M, G, GG, etc.)" },
+        "colors": { "type": "array", "description": "Enabled colors (Nude, Off White, Preto, etc.)" },
+        "price": { "type": "number", "description": "Regular selling price" },
+        "promoPrice": { "type": "number", "description": "Promotional selling price (optional)" },
+        "weight": { "type": "number", "description": "Weight in grams for shipping calculation" },
+        "images": { "type": "array", "description": "List of external image URLs" },
+        "stock": { "type": "number", "description": "Current item inventory count" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "price", "sku", "stock"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order via e-commerce checkouts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerCpf": { "type": "string" },
+        "cep": { "type": "string" },
+        "address": { "type": "string" },
+        "number": { "type": "string" },
+        "complement": { "type": "string" },
+        "bairro": { "type": "string" },
+        "cidade": { "type": "string" },
+        "estado": { "type": "string" },
+        "items": { "type": "array" },
+        "shippingType": { "type": "string" },
+        "shippingCost": { "type": "number" },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["Novo", "Pago", "Separando", "Enviado", "Entregue", "Cancelado"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "orderNumber", "customerName", "customerPhone", "items", "total", "status", "createdAt"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "Discount coupon code definitions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "type": { "type": "string", "enum": ["percentual", "valor fixo", "frete grátis"] },
+        "value": { "type": "number" },
+        "minPurchase": { "type": "number" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "code", "type", "value", "isActive"]
+    },
+    "Config": {
+      "title": "Config",
+      "description": "Global store configs like banners and social links",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "instagram": { "type": "string" },
+        "facebook": { "type": "string" },
+        "tiktok": { "type": "string" },
+        "pinterest": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "banners": { "type": "array" }
+      },
+      "required": ["id"]
+    },
+    "CashControl": {
+      "title": "CashControl",
+      "description": "Backoffice POS physical register cash balance flow session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "status": { "type": "string", "enum": ["Aberto", "Fechado"] },
+        "openedAt": { "type": "string", "format": "date-time" },
+        "closedAt": { "type": "string", "format": "date-time" },
+        "initialBalance": { "type": "number" },
+        "finalBalance": { "type": "number" },
+        "transactions": { "type": "array" }
+      },
+      "required": ["id", "status", "openedAt", "initialBalance"]
+    },
+    "StockMovement": {
+      "title": "StockMovement",
+      "description": "Stock adjustment and transaction records",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "sku": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "type": { "type": "string", "enum": ["entrada", "saida", "ajuste"] },
+        "quantity": { "type": "number" },
+        "reason": { "type": "string" },
+        "previousStock": { "type": "number" },
+        "newStock": { "type": "number" }
+      },
+      "required": ["id", "productId", "sku", "type", "quantity"]
+    }
+  },
+  "firestore": {
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Store categories database"
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Store catalog inventory"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer and PDV orders"
+    },
+    "/coupons/{couponId}": {
+      "schema": { "$ref": "#/entities/Coupon" },
+      "description": "Discount codes table"
+    },
+    "/configs/{configId}": {
+      "schema": { "$ref": "#/entities/Config" },
+      "description": "Social media links policies and active image banners"
+    },
+    "/cashControl/{cashId}": {
+      "schema": { "$ref": "#/entities/CashControl" },
+      "description": "Registry cash drawer tracking logs"
+    },
+    "/cashHistory/{historyId}": {
+      "schema": { "$ref": "#/entities/CashControl" },
+      "description": "Historical records of finalized cash sessions"
+    },
+    "/stockLogs/{logId}": {
+      "schema": { "$ref": "#/entities/StockMovement" },
+      "description": "Stock movement logs"
+    },
+    "/test/{testId}": {
+      "schema": "string",
+      "description": "Simple connection test document"
+    }
+  }
+}

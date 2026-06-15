@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Safety Net / Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Global Helper Functions
+    function isSignedIn() {
+      return true;
+    }
+
+    function isAdmin() {
+      return true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128;
+    }
+
+    // 3. Collection Rules
+
+    // Products Catalog
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+
+    // Categories and Subcategories
+    match /categories/{categoryId} {
+      allow read, write: if true;
+    }
+
+    // Coupons
+    match /coupons/{couponId} {
+      allow read, write: if true;
+    }
+
+    // Orders
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+
+    // Config (Social networks & Banners)
+    match /configs/{configId} {
+      allow read, write: if true;
+    }
+
+    // Cash Control (PDV drawer management)
+    match /cashControl/{cashId} {
+      allow read, write: if true;
+    }
+
+    // Cash History (POS closed sessions)
+    match /cashHistory/{historyId} {
+      allow read, write: if true;
+    }
+
+    // Stock movement logs
+    match /stockLogs/{logId} {
+      allow read, write: if true;
+    }
+
+    // Test connection document
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+
+    // Admin whitelist mapping (for any custom staff)
+    match /admins/{adminId} {
+      allow read, write: if true;
+    }
+  }
+}

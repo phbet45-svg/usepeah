@@ -1,0 +1,6 @@
+{
+  "name": "USEPEAH",
+  "description": "Plataforma de e-commerce de luxo e sistema de gerenciamento de moda feminina com PDV, controle de estoque e painel administrativo para a marca USEPEAH.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
