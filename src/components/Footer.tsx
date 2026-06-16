@@ -78,6 +78,15 @@ export default function Footer({ socials, onAdminClick }: FooterProps) {
             <li><span className="cursor-pointer hover:text-luxury transition-colors duration-200">Política de Troca</span></li>
             <li><span className="cursor-pointer hover:text-luxury transition-colors duration-200">Guia de Medidas</span></li>
             <li><span className="cursor-pointer hover:text-luxury transition-colors duration-200">Sobre o Envio</span></li>
+            <li>
+              <button
+                id="admin-footer-trigger"
+                onClick={onAdminClick}
+                className="cursor-pointer hover:text-luxury transition-colors duration-200 text-left text-neutral-400 font-light text-xs focus:outline-none"
+              >
+                Área Administrativa
+              </button>
+            </li>
           </ul>
         </div>
 
@@ -111,14 +120,6 @@ export default function Footer({ socials, onAdminClick }: FooterProps) {
           <div>
             &copy; {new Date().getFullYear()} USEPEAH. Todos os direitos reservados. CNPJ: 99.999.999/0001-99.
           </div>
-          {/* Subtle Invisible Administrative Access Point */}
-          <button
-            id="admin-hidden-trigger"
-            onClick={onAdminClick}
-            className="text-[10px] text-neutral-600 hover:text-luxury tracking-luxury font-sans uppercase focus:outline-none transition active:scale-95"
-          >
-            Área Administrativa
-          </button>
         </div>
       </div>
     </footer>
